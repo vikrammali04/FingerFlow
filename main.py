@@ -2,10 +2,16 @@ import cv2
 import mediapipe
 from utils import ColorDrawer
 
+
 def main():
+    """
+    Runs the main logic for hand detection and drawing on the canvas based on hand gestures.
+    Uses the MediaPipe Hands model for hand detection and the ColorDrawer class for drawing functionalities.
+    Handles color selection, canvas clearing, button interactions, and drawing lines on the canvas and camera frame.
+    """     
     hand_detector = mediapipe.solutions.hands.Hands(model_complexity=1,
-                                                   min_detection_confidence=0.4,
-                                                   min_tracking_confidence=0.4)
+                                                    min_detection_confidence=0.3,
+                                              min_tracking_confidence=0.6)
     cap = cv2.VideoCapture(0)
     drawer = ColorDrawer()
 
@@ -33,12 +39,14 @@ def main():
             thumb = (landmarks[4][0], landmarks[4][1])
 
             # Draw the fingertip
-            cv2.circle(frame, fore_finger, 3, drawer.colors[drawer.colorIndex], -1)
+            cv2.circle(frame, fore_finger, 3,
+                       drawer.colors[drawer.colorIndex], -1)
 
             # Button interaction logic
             if (thumb[1] - fore_finger[1] < 30):
-
+                # Preventing drawing when fore finger is near to thumb.
                 drawer.add_next_deques()
+
             elif fore_finger[1] <= 65:
                 # In button mode
                 if 40 <= fore_finger[0] <= 140:  # Clear Button
@@ -49,6 +57,7 @@ def main():
                     drawer.update_color_index(1)  # Green
                 elif 400 <= fore_finger[0] <= 500:
                     drawer.update_color_index(2)  # Red
+                    
             else:
                 drawer.add_point(fore_finger)
         else:
@@ -62,16 +71,20 @@ def main():
                 for k in range(1, len(points[i][j])):
                     if points[i][j][k - 1] is None or points[i][j][k] is None:
                         continue
-                    cv2.line(frame, points[i][j][k - 1], points[i][j][k], drawer.colors[i], 4)
-                    cv2.line(drawer.paintWindow, points[i][j][k - 1], points[i][j][k], drawer.colors[i], 4)
+                    cv2.line(frame, points[i][j][k - 1],
+                             points[i][j][k], drawer.colors[i], 4)
+                    cv2.line(
+                        drawer.paintWindow, points[i][j][k - 1], points[i][j][k], drawer.colors[i], 4)
 
         cv2.imshow("Canvas", drawer.paintWindow)
         cv2.imshow("Camera", drawer.update_camera_ui(frame=frame))
         if cv2.waitKey(1) == ord('q'):
+            # Press 'q' to exit the application. 
             break
 
     cap.release()
     cv2.destroyAllWindows()
+
 
 if __name__ == "__main__":
     main()

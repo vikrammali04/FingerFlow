@@ -3,6 +3,7 @@ import cv2
 from collections import deque
 
 class ColorDrawer:
+    """ The ColorDrawer class enables drawing on a virtual canvas with different colors (blue, green, red) and tracks drawn points using deques. It supports switching colors, clearing the canvas, and managing UI elements like color selection and clearing options. """
     def __init__(self):
         self.blue = [deque(maxlen=1024)]
         self.green = [deque(maxlen=1024)]
@@ -17,10 +18,9 @@ class ColorDrawer:
         self.setup_paint_window()
 
     def setup_paint_window(self):
-        self.paintWindow = cv2.rectangle(self.paintWindow, (40, 1), (140, 65), (0, 0, 0), 2)
-        self.paintWindow = cv2.rectangle(self.paintWindow, (160, 1), (260, 65), (255, 0, 0), 2)
-        self.paintWindow = cv2.rectangle(self.paintWindow, (280, 1), (380, 65), (0, 255, 0), 2)
-        self.paintWindow = cv2.rectangle(self.paintWindow, (400, 1), (500, 65), (0, 0, 255), 2)
+        """
+        Draws colored rectangles on the paint window at specific positions with specified colors and thickness.
+        """
         cv2.putText(self.paintWindow, "CLEAR", (60, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
         cv2.putText(self.paintWindow, "BLUE", (180, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2, cv2.LINE_AA)
         cv2.putText(self.paintWindow, "GREEN", (300, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2, cv2.LINE_AA)
@@ -50,6 +50,7 @@ class ColorDrawer:
         return [self.blue, self.green, self.red]
     
     def add_next_deques(self):
+        """  Appends new empty deques for each color (blue, green, red) to separate the next set of drawn points. This ensures smooth continuation of the drawing without mixing coordinates from earlier strokes."""
         self.blue.append(deque(maxlen=512))
         self.blue_index += 1
         self.green.append(deque(maxlen=512))
