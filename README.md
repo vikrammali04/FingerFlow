@@ -14,7 +14,7 @@ The app detects your hand using the MediaPipe Hands model and tracks the positio
 1. Clone the repository:
     **git clone https://github.com/vikrammali04/FingerFlow.git**
 
-2. Change directoye
+2. Change directory:
     **cd FingerFlow**
 
 3. Install dependencies:
@@ -23,7 +23,7 @@ The app detects your hand using the MediaPipe Hands model and tracks the positio
 4. Run the app:
     **python main.py**
 
-# Usage
+## Usage
 * Launch the app and position your hand in front of the webcam.
 * Use the forefinger to draw on the canvas.
 * Bring your thumb closer to the forefinger to avoid drawing canvas while hovering over       webcam. 
@@ -31,7 +31,7 @@ The app detects your hand using the MediaPipe Hands model and tracks the positio
 * Clear the canvas by hovering over the "Clear" button.
 * Press 'q' to exit the application.
 
-# Customization
+## Customization
 For personalized results, you can modify the parameters of the hand detection model:
 You can adjust:
 
@@ -39,5 +39,5 @@ You can adjust:
 2. *min_detection_confidence*: Controls the minimum threshold for detecting a hand.
 3. *min_tracking_confidence*: Affects how well the app tracks hand movements.
 
-# Note
+## Note
 While the app has been thoroughly tested, the accuracy of the drawn points and the smoothness of the experience may vary depending on your webcam's resolution, frame rate, and other factors like lighting conditions. For the best experience, use a webcam with higher resolution and adjust the parameters to suit your camera's performance.
